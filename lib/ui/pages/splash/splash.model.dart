@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
-import 'package:shoppingappsampleflutter/core/services/routing/navigation_sevice.dart';
+import 'package:shoppingappsampleflutter/core/models/app_config.dart';
+import 'package:shoppingappsampleflutter/core/services/db.service.dart';
+import 'package:shoppingappsampleflutter/core/services/routing/navigation.sevice.dart';
 import 'package:shoppingappsampleflutter/core/services/routing/routes.dart';
 import 'package:shoppingappsampleflutter/service_locator.dart';
 
 import '../base.model.dart';
 
 class SplashModel extends BaseModel {
+  final DbService _dbService = locator<DbService>();
   final NavigationService _navigationService = locator<NavigationService>();
 
   PageController _pageController = PageController();
@@ -67,6 +70,10 @@ class SplashModel extends BaseModel {
   }
 
   void skipFinish() {
+    _dbService.insert(
+      AppConfig().tableName,
+      AppConfig(id: 1, key: "isIntroViewed", value: "true").toMap(),
+    );
     _navigationService.navigateToWithClearHistory(Routes.Home);
   }
 }

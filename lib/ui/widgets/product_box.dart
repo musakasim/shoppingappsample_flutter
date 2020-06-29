@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppingappsampleflutter/core/models/product.dart';
-import 'package:shoppingappsampleflutter/core/services/routing/navigation_sevice.dart';
+import 'package:shoppingappsampleflutter/core/services/routing/navigation.sevice.dart';
 import 'package:shoppingappsampleflutter/core/services/routing/routes.dart';
 import 'package:shoppingappsampleflutter/core/services/theme.service.dart';
 import 'package:shoppingappsampleflutter/service_locator.dart';

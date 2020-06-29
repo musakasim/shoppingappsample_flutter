@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:shoppingappsampleflutter/core/models/product.dart';
-import 'package:shoppingappsampleflutter/sample_data/products.dart';
+import 'package:shoppingappsampleflutter/core/services/api/sample_data/sample_products.dart';
 
 class ProductsService {
   Future<List<Product>> getProducts() async {

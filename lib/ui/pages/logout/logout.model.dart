@@ -1,5 +1,5 @@
 
-import 'package:shoppingappsampleflutter/core/services/routing/navigation_sevice.dart';
+import 'package:shoppingappsampleflutter/core/services/routing/navigation.sevice.dart';
 import 'package:shoppingappsampleflutter/core/services/routing/routes.dart';
 import 'package:shoppingappsampleflutter/service_locator.dart';
 

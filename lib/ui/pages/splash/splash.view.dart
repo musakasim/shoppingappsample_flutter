@@ -8,11 +8,11 @@ class SplashView extends StatelessWidget {
 
   final List<Widget> introPages = [
     Image(
-      image: AssetImage('lib/assets/splash1.jpg'),
+      image: AssetImage('assets/splash1.jpg'),
       fit: BoxFit.fill,
     ),
     Image(
-      image: AssetImage('lib/assets/splash2.jpg'),
+      image: AssetImage('assets/splash2.jpg'),
       fit: BoxFit.fill,
     ),
   ];
