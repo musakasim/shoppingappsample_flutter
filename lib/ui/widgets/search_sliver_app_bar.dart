@@ -4,10 +4,10 @@ import 'package:shoppingappsampleflutter/ui/widgets/drawer_stack.dart';
 
 import '../../service_locator.dart';
 
-class SearchAppBar extends StatelessWidget {
+class SearchSliverAppBar extends StatelessWidget {
   ThemeService ts = locator<ThemeService>();
 
-  SearchAppBar({
+  SearchSliverAppBar({
     Key key,
   }) : super(key: key);
 
@@ -31,12 +31,9 @@ class SearchAppBar extends StatelessWidget {
         icon: Icon(Icons.menu),
         onPressed: () {
           print("tttt");
-          DrawerStack(
-            body: FlatButton(
-              child: Text('Hesabım'),
-              autofocus: true,
-              clipBehavior: Clip.hardEdge,
-            ),
+           DrawerStack(
+            body: body(),
+            drawer: drawer(),
           )..openDrawer();
           /* TODO: show drawer */
         },

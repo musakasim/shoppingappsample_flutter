@@ -7,11 +7,10 @@ import '../base.model.dart';
 
 class LoginPageModel extends BaseModel {
   final NavigationService _navigationService = locator<NavigationService>();
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
+  final AuthenticationService _authenticationService = locator<AuthenticationService>();
 
   Future login({bool success = true}) async {
-    setState(ViewState.Busy);
+    setViewState(ViewState.Busy);
 
     await _authenticationService.login("Ahmet");
 
@@ -22,6 +21,6 @@ class LoginPageModel extends BaseModel {
       setErrorMessage(null);
     }
 
-    setState(ViewState.Idle);
+    setViewState(ViewState.Idle);
   }
 }

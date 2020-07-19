@@ -9,7 +9,7 @@ class ThemeService {
   final Color clr4 = Color(0xFFf2e8cf);
   final Color clr5 = Color(0xFFbc4749);
   final Color clr6 = Colors.deepPurple;
-  MaterialColor themeColorSet = MaterialColor(
+  static MaterialColor themeColorSet = MaterialColor(
     0xFFa7c957,
     {
       50: Color(0xFF386641),
@@ -23,5 +23,11 @@ class ThemeService {
       800: Color.fromRGBO(136, 14, 79, .9),
       900: Color.fromRGBO(136, 14, 79, 1),
     },
+  );
+
+  ThemeData theme = ThemeData(
+    primarySwatch: themeColorSet,
+    visualDensity: VisualDensity
+        .adaptivePlatformDensity, // For desktop platforms, the controls will be smaller and closer together (more dense) than on mobile platforms.
   );
 }

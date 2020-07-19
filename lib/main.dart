@@ -38,11 +38,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Alışveriş Yap!',
-      theme: ThemeData(
-        primarySwatch: ts.themeColorSet,
-        visualDensity: VisualDensity
-            .adaptivePlatformDensity, // For desktop platforms, the controls will be smaller and closer together (more dense) than on mobile platforms.
-      ),
+      theme: ts.theme,
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: Routes().generateRoutes,
       initialRoute: Routes.Home,
@@ -59,6 +55,9 @@ class _MyAppState extends State<MyApp> {
 
     if (!hasIntroSeenByUser) {
       navigationService.navigateToWithClearHistory(Routes.Splash);
+    } else {
+      // TODO loading sayfası ekleyelim HomeRoute bu sayfa olsun, bu else'e gelirse Home'a yönlensin:
+      // navigationService.navigateToWithClearHistory(Routes.Home);
     }
   }
 }
