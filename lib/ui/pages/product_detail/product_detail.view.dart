@@ -5,7 +5,7 @@ import 'package:shoppingappsampleflutter/core/models/product.dart';
 import 'package:shoppingappsampleflutter/core/services/api/products.service.dart';
 import 'package:shoppingappsampleflutter/core/services/theme.service.dart';
 import 'package:shoppingappsampleflutter/service_locator.dart';
-import 'package:shoppingappsampleflutter/ui/widgets/search_app_bar.dart';
+import 'package:shoppingappsampleflutter/ui/widgets/search_sliver_app_bar.dart';
 
 import 'product_detail.model.dart';
 
@@ -19,8 +19,7 @@ class ProductDetailViewParams {
 class ProductDetailView extends StatefulWidget {
   final String productId;
   final String tempPhotoAsset;
-  ProductDetailView({Key key, this.productId, this.tempPhotoAsset})
-      : super(key: key);
+  ProductDetailView({Key key, this.productId, this.tempPhotoAsset}) : super(key: key);
 
   @override
   _ProductDetailViewState createState() => _ProductDetailViewState();
@@ -48,7 +47,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
         builder: (context, model, child) => Scaffold(
           body: CustomScrollView(
             slivers: <Widget>[
-              SearchAppBar(),
+              SearchSliverAppBar(),
               SliverList(
                 delegate: SliverChildListDelegate(
                   <Widget>[
@@ -57,9 +56,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                       builder: (context, AsyncSnapshot<Product> snapshot) {
                         Product prd = Product(
                           id: widget.productId,
-                          photoAssets: widget.tempPhotoAsset != null
-                              ? [widget.tempPhotoAsset]
-                              : null,
+                          photoAssets: widget.tempPhotoAsset != null ? [widget.tempPhotoAsset] : null,
                           name: "",
                           price: 0,
                         );
@@ -160,13 +157,10 @@ class _ProductDetailState extends State<ProductDetail> {
                     return Container(
                       width: 8.0,
                       height: 8.0,
-                      margin:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: _current == index
-                            ? Color.fromRGBO(0, 0, 0, 0.9)
-                            : Color.fromRGBO(0, 0, 0, 0.4),
+                        color: _current == index ? Color.fromRGBO(0, 0, 0, 0.9) : Color.fromRGBO(0, 0, 0, 0.4),
                       ),
                     );
                   }).toList(),
