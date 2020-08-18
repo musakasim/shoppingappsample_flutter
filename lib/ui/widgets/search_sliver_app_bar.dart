@@ -5,10 +5,14 @@ import 'package:shoppingappsampleflutter/ui/widgets/drawer_stack.dart';
 import '../../service_locator.dart';
 
 class SearchSliverAppBar extends StatelessWidget {
-  ThemeService ts = locator<ThemeService>();
+  final ThemeService ts = locator<ThemeService>();
+
+  final VoidCallback onPressedMenu;
+  // final Function(bool) onPressedMenu;
 
   SearchSliverAppBar({
     Key key,
+    this.onPressedMenu,
   }) : super(key: key);
 
   @override
@@ -29,14 +33,7 @@ class SearchSliverAppBar extends StatelessWidget {
         // padding: EdgeInsets.all(0),
         // iconSize: 30,
         icon: Icon(Icons.menu),
-        onPressed: () {
-          print("tttt");
-           DrawerStack(
-            body: body(),
-            drawer: drawer(),
-          )..openDrawer();
-          /* TODO: show drawer */
-        },
+        onPressed: () => _onPressedMenu(context),
       ),
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.fromLTRB(50, 0, 50, 5),
@@ -62,5 +59,13 @@ class SearchSliverAppBar extends StatelessWidget {
         )
       ],
     );
+  }
+
+  void _onPressedMenu(BuildContext context) {
+    print("menu button pressed");
+    context.findAncestorWidgetOfExactType<DrawerStack>().openDrawer();
+    if (this.onPressedMenu != null) {
+      this.onPressedMenu();
+    }
   }
 }

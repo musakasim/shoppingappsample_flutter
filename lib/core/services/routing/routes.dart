@@ -20,9 +20,7 @@ class Routes {
       case Routes.Login:
         return MaterialPageRoute(builder: (context) => LoginView());
       case Routes.Logout:
-        print(
-          "settings $settings",
-        );
+        print("settings $settings");
         String userName = "";
         if (settings.arguments is String) {
           userName = settings.arguments as String;

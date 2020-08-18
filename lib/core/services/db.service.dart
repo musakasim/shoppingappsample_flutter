@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -10,20 +11,25 @@ class DbService {
   final int instanceId = Math.Random().nextInt(10000);
 
   DbService() {
-    print(
-        "DbService $instanceId _______________________________________________");
-    initDb();
+    print("DbService $instanceId _____________________________ init");
+    if (!Platform.isWindows) {
+      // TODO WİNDOWS DB HAZIRLANACAK
+      initDb();
+    }
   }
 
   Future<Database> waitDbInit() async {
     var database = await _database;
 
-    while (database == null) {
-      await Future.delayed(Duration(milliseconds: 50));
-      print(
-          "DbService $instanceId _______________________________________________");
+    if (!Platform.isWindows) {
+      while (database == null) {
+        await Future.delayed(Duration(milliseconds: 50));
+        print("DbService $instanceId _____________________________ waiting db");
 
-      database = await _database;
+        database = await _database;
+      }
+    } else {
+      database = await Future.value(null);
     }
     return database;
   }
@@ -32,8 +38,7 @@ class DbService {
     // Open the database and store the reference.
     var dbRootPath = await getDatabasesPath();
     var dbPath = join(dbRootPath, 'shoppingappsample_flutter_database2.db');
-    print(
-        "dbPath $dbPath  $instanceId _______________________________________________");
+    print("dbPath $dbPath  $instanceId _______________________________________________");
     final database = openDatabase(
       // Set the path to the database. Note: Using the `join` function from the
       // `path` package is best practice to ensure the path is correctly
@@ -57,15 +62,13 @@ class DbService {
 
   getAllTable(String tableName) async {
     final db = await waitDbInit();
-    print(
-        "getAllTable  $instanceId _______________________________________________");
+    print("getAllTable  $instanceId _______________________________________________");
     return db.query(tableName);
   }
 
   Future<int> insert(String tableName, Map map) async {
     final db = await waitDbInit();
-    print(
-        "getAllTable  $instanceId _______________________________________________");
+    print("getAllTable  $instanceId _______________________________________________");
 
     return db.insert(
       tableName,

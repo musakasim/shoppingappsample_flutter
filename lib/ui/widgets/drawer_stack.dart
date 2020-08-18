@@ -2,20 +2,38 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+// eg: 
+// use as top level widget:
+//    Material(
+//        child: DrawerStack(
+//          body: body(),
+//          drawer: _drawer(),
+//        ),
+//      ),
+//    )
+// open with button:
+//    RaisedButton(
+//      child: Text('Open drawer'),
+//      onPressed: () {
+//        context.findAncestorWidgetOfExactType<DrawerStack>().openDrawer();
+//        // DrawerStack.of(context).openDrawer();
+//      },
+//    )
 class DrawerStack extends StatelessWidget {
-  final GlobalKey<DrawerControllerState> _drawerKey =
-      GlobalKey<DrawerControllerState>();
+  final GlobalKey<DrawerControllerState> _drawerKey = GlobalKey<DrawerControllerState>();
   final drawerScrimColor = Color.fromARGB(90, 100, 100, 128);
-  final double drawerEdgeDragWidth = null;
-  final DragStartBehavior drawerDragStartBehavior = DragStartBehavior.start;
 
   final Widget body;
-  final Drawer drawer;
+  final Widget drawer;
 
   DrawerStack({Key key, this.body, this.drawer}) : super(key: key);
 
   void openDrawer() {
     _drawerKey.currentState?.open();
+  }
+
+  void closeDrawer() {
+    _drawerKey.currentState?.close();
   }
 
   @override
@@ -24,15 +42,15 @@ class DrawerStack extends StatelessWidget {
       children: [
         // body
         body,
+
         DrawerController(
           key: _drawerKey,
-          alignment: DrawerAlignment.end,
+          alignment: DrawerAlignment.start,
           child: drawer,
           drawerCallback: (_) {},
-          dragStartBehavior: drawerDragStartBehavior,
-          //widget.drawerDragStartBehavior,
+          dragStartBehavior: DragStartBehavior.down,
           scrimColor: drawerScrimColor,
-          edgeDragWidth: drawerEdgeDragWidth,
+          edgeDragWidth: null,
         ),
       ],
     );

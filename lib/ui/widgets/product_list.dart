@@ -30,7 +30,7 @@ class _ProductListState extends State<ProductList> {
       child: FutureBuilder(
         future: products,
         builder: (context, AsyncSnapshot<List<Product>> snapshot) {
-          print(snapshot.data?.length);
+          print('snapshot.data?.length: ' + snapshot.data?.length.toString());
           if (snapshot.connectionState == ConnectionState.done) {
             var rows = List<Widget>();
             for (var i = 0; i + 1 < snapshot.data.length; i += 2) {

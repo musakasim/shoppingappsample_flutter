@@ -6,8 +6,9 @@ class ProductsService {
   Future<List<Product>> getProducts() async {
     try {
       Response response = await Dio().get("http://www.google.com");
-      print(response);
+      print('getProducts() response' + response.data.toString().substring(0, 50));
     } catch (e) {
+      print('getProducts() exception' + e);
       print(e);
     }
 
@@ -20,6 +21,7 @@ class ProductsService {
     try {
       // Response response = await Future.delayed(Duration(seconds: 1));
     } catch (e) {
+      print('getProduct() exception' + e);
       print(e);
     }
 
