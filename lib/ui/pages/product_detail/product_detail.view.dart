@@ -2,79 +2,39 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingappsampleflutter/core/models/product.dart';
-import 'package:shoppingappsampleflutter/core/services/api/products.service.dart';
 import 'package:shoppingappsampleflutter/core/services/theme.service.dart';
 import 'package:shoppingappsampleflutter/service_locator.dart';
 import 'package:shoppingappsampleflutter/ui/widgets/search_sliver_app_bar.dart';
 
 import 'product_detail.model.dart';
 
+// REVIEW bu şeklde parametre tip tanımı güzel mi?
 class ProductDetailViewParams {
   final String productId;
   final String tempPhotoAsset;
-
   ProductDetailViewParams(this.productId, this.tempPhotoAsset);
 }
 
-class ProductDetailView extends StatefulWidget {
+class ProductDetailView extends StatelessWidget {
+  final ThemeService ts = locator<ThemeService>();
   final String productId;
   final String tempPhotoAsset;
-  ProductDetailView({Key key, this.productId, this.tempPhotoAsset}) : super(key: key);
-
-  @override
-  _ProductDetailViewState createState() => _ProductDetailViewState();
-}
-
-class _ProductDetailViewState extends State<ProductDetailView> {
-  ThemeService ts = locator<ThemeService>();
-  ProductsService prdService = locator<ProductsService>();
-
-  var currentBackPressTime;
-
-  Future<Product> product;
-
-  @override
-  void initState() {
-    super.initState();
-    product = prdService.getProduct(widget.productId);
-  }
+  final ProductDetailModel productDetailModel;
+  ProductDetailView({Key key, this.productId, this.tempPhotoAsset})
+      : productDetailModel = ProductDetailModel(productId: productId, tempPhotoAsset: tempPhotoAsset),
+        super(key: key) {}
 
   @override
   Widget build(BuildContext context) {
+    print("build called ProductDetailView");
     return ChangeNotifierProvider(
-      create: (context) => ProductDetailModel(),
+      create: (context) => productDetailModel,
       child: Consumer<ProductDetailModel>(
         builder: (context, model, child) => Scaffold(
           body: CustomScrollView(
-            slivers: <Widget>[
+            slivers: [
               SearchSliverAppBar(),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  <Widget>[
-                    FutureBuilder(
-                      future: product,
-                      builder: (context, AsyncSnapshot<Product> snapshot) {
-                        Product prd = Product(
-                          id: widget.productId,
-                          photoAssets: widget.tempPhotoAsset != null ? [widget.tempPhotoAsset] : null,
-                          name: "",
-                          price: 0,
-                        );
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.done:
-                            prd = snapshot.data;
-                            break;
-                          default:
-                            break;
-                        }
-                        return ProductDetail(
-                          product: prd,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
+              SliverList(delegate: SliverChildListDelegate([ProductDetail(product: model.prd)])),
             ],
           ),
         ),
@@ -84,12 +44,9 @@ class _ProductDetailViewState extends State<ProductDetailView> {
 }
 
 class ProductDetail extends StatefulWidget {
-  Product product;
+  final Product product;
 
-  ProductDetail({
-    Key key,
-    this.product,
-  }) : super(key: key);
+  ProductDetail({Key key, this.product}) : super(key: key);
 
   @override
   _ProductDetailState createState() => _ProductDetailState();
@@ -98,10 +55,12 @@ class ProductDetail extends StatefulWidget {
 class _ProductDetailState extends State<ProductDetail> {
   ThemeService ts = locator<ThemeService>();
 
+  // TODO model'e alınacak Stateless widget yapılacak
   int _current = 0;
 
   @override
   Widget build(BuildContext context) {
+    print("build called _ProductDetailState");
     return Container(
       // color: ts.clr4,
       child: Column(

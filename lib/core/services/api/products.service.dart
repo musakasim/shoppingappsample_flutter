@@ -19,12 +19,15 @@ class ProductsService {
 
   Future<Product> getProduct(String productId) async {
     try {
-      // Response response = await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 1));
     } catch (e) {
       print('getProduct() exception' + e);
       print(e);
     }
-
+    // print("productId:" + productId + " count:" + sampleProducts1.length.toString());
+    // for (var i = 0; i < sampleProducts1.length; i++) {
+    //   print('i:' + i.toString() + " prdid:" + sampleProducts1[i].id);
+    // }
     return sampleProducts1.firstWhere((element) => element.id == productId);
   }
 }
