@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import 'cart.model.dart';
+import 'account.model.dart';
 
-class Cart extends StatelessWidget {
+class Account extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => CartModel(),
-      child: Consumer<CartModel>(
+      create: (context) => AccountModel(),
+      child: Consumer<AccountModel>(
         builder: (context, model, child) => Container(
           child: Column(
             children: [
@@ -16,13 +16,13 @@ class Cart extends StatelessWidget {
               Text("2"),
               Text("3"),
               Text("4"),
-              Text("4"),
-              Text("4"),
-              Text("4"),
-              Text("4"),
-              Text("4"),
-              Text("4"),
-              Text("4"),
+              Text("8"),
+              Text("8"),
+              Text("8"),
+              Text("8"),
+              Text("8"),
+              Text("8"),
+              Text("8"),
             ],
           ),
         ),

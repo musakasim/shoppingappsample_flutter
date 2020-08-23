@@ -1,8 +1,10 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingappsampleflutter/core/services/theme.service.dart';
 import 'package:shoppingappsampleflutter/service_locator.dart';
+import 'package:shoppingappsampleflutter/ui/pages/home/account/account.view.dart';
 import 'package:shoppingappsampleflutter/ui/widgets/search_sliver_app_bar.dart';
 
 import 'cart/cart.view.dart';
@@ -12,6 +14,7 @@ import 'home.model.dart';
 class HomeView extends StatelessWidget {
   final ThemeService ts = locator<ThemeService>();
   DateTime currentBackPressTime;
+
   HomeView({Key key}) : super(key: key);
 
   @override
@@ -20,13 +23,20 @@ class HomeView extends StatelessWidget {
       create: (context) => HomeModel(),
       child: Consumer<HomeModel>(
         builder: (context, model, child) => Scaffold(
-          body: CustomScrollView(
-            controller: model.controller,
-            slivers: [
-              SearchSliverAppBar(),
-              SliverList(delegate: SliverChildListDelegate([getCurrentPageView(model.activePageIndex)])),
-            ],
-          ),
+          body: FadeTransition(
+              opacity: model.pageChangeOpacityAnimation,
+              child: SlideTransition(
+                position: model.pageChangeSlideAnimation,
+                child: Container(
+                  child: CustomScrollView(
+                    controller: model.scrollController,
+                    slivers: [
+                      SearchSliverAppBar(),
+                      SliverList(delegate: SliverChildListDelegate([getCurrentPageView(model.activePageIndex)])),
+                    ],
+                  ),
+                ),
+              )),
           // body: getCurrentPageView(model.activePageIndex),
           bottomNavigationBar: Consumer<HomeModel>(
             builder: (context, model, child) => AnimatedContainer(
@@ -55,7 +65,7 @@ class HomeView extends StatelessWidget {
             ),
           ),
           bottomSheet: Consumer<HomeModel>(
-            builder: (context, model, child) => Text("debug" + model.isBottomNavBarVisible.toString()),
+            builder: (context, model, child) => Text("debug:" + model.pageChangeSlideAnimation.value.toString()),
           ),
           // persistentFooterButtons: <Widget>[
           //   Text("Test1"),
@@ -72,6 +82,12 @@ class HomeView extends StatelessWidget {
         return Dashboard();
       case 1:
         return Cart();
+      case 2:
+        return Account();
+      case 3:
+        return Account();
+      case 4:
+        return Account();
       default:
         return Dashboard();
     }
