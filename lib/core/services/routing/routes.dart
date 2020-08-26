@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppingappsampleflutter/ui/pages/home/home.view.dart';
+import 'package:shoppingappsampleflutter/ui/pages/loading/loading.view.dart';
 import 'package:shoppingappsampleflutter/ui/pages/logout/logout.view.dart';
 import 'package:shoppingappsampleflutter/ui/pages/parent-page.dart';
 import 'package:shoppingappsampleflutter/ui/pages/product_detail/product_detail.view.dart';
@@ -9,6 +10,7 @@ import 'package:shoppingappsampleflutter/ui/pages/login/login.view.dart';
 import 'package:shoppingappsampleflutter/ui/helpers/widget-extensions.dart';
 
 class Routes {
+  static const String Loading = "/loading";
   static const String Splash = "/splash";
   static const String Home = "/";
   static const String Login = "/login";
@@ -17,6 +19,8 @@ class Routes {
 
   Route<dynamic> generateRoutes(RouteSettings settings) {
     switch (settings.name) {
+      case Routes.Loading:
+        return MaterialPageRoute(builder: (context) => LoadingView());
       case Routes.Splash:
         return MaterialPageRoute(builder: (context) => SplashView());
       case Routes.Login:

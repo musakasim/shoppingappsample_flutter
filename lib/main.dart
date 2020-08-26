@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       theme: ts.theme,
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: Routes().generateRoutes,
-      initialRoute: Routes.Home,
+      initialRoute: Routes.Loading,
     );
   }
 
@@ -58,8 +58,8 @@ class _MyAppState extends State<MyApp> {
     if (!hasIntroSeenByUser) {
       navigationService.navigateToWithClearHistory(Routes.Splash);
     } else {
-      // TODO loading sayfası ekleyelim HomeRoute bu sayfa olsun, bu else'e gelirse Home'a yönlensin:
-      // navigationService.navigateToWithClearHistory(Routes.Home);
+      // TODO loading sayfası ekleyelim initialRoute bu sayfa olsun, bu else'e gelirse Home'a yönlensin:
+      navigationService.navigateToWithClearHistory(Routes.Home);
     }
   }
 }

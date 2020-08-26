@@ -9,23 +9,24 @@ class Cart extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => CartModel(),
       child: Consumer<CartModel>(
-        builder: (context, model, child) => Container(
-          child: Column(
-            children: [
-              Text("1"),
-              Text("2"),
-              Text("3"),
-              Text("4"),
-              Text("4"),
-              Text("4"),
-              Text("4"),
-              Text("4"),
-              Text("4"),
-              Text("4"),
-              Text("4"),
-            ],
+        builder: (context, model, child) => Column(children: [
+          ListView.builder(
+            itemCount: model.items.length,
+            itemBuilder: (context, index) {
+              return Container(child: Text(model.items[index]), height: 100,);
+            },
+            // shrinkWrap: true aşağıdaki  sebepten dolayı:
+            // Vertical viewport was given unbounded height.
+            // Viewports expand in the scrolling direction to fill their container. In this case, a vertical
+            // viewport was given an unlimited amount of vertical space in which to expand. This situation
+            // typically happens when a scrollable widget is nested inside another scrollable widget.
+            // If this widget is always nested in a scrollable widget there is no need to use a viewport because
+            // there will always be enough vertical space for the children. In this case, consider using a Column
+            // instead. Otherwise, consider using the "shrinkWrap" property (or a ShrinkWrappingViewport) to size
+            // the height of the viewport to the sum of the heights of its children.
+            shrinkWrap: true,
           ),
-        ),
+        ]),
       ),
     );
   }
