@@ -1,10 +1,9 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingappsampleflutter/core/services/theme.service.dart';
 import 'package:shoppingappsampleflutter/service_locator.dart';
 import 'package:shoppingappsampleflutter/ui/pages/home/account/account.view.dart';
+import 'package:shoppingappsampleflutter/ui/widgets/NavigatorX.dart';
 import 'package:shoppingappsampleflutter/ui/widgets/search_sliver_app_bar.dart';
 
 import 'cart/cart.view.dart';
@@ -13,7 +12,7 @@ import 'home.model.dart';
 
 class HomeView extends StatelessWidget {
   final ThemeService ts = locator<ThemeService>();
-  DateTime currentBackPressTime;
+  // DateTime currentBackPressTime;
 
   HomeView({Key key}) : super(key: key);
 
@@ -22,8 +21,10 @@ class HomeView extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => HomeModel(),
       child: Consumer<HomeModel>(
-        builder: (context, model, child) => Scaffold(
-          body: FadeTransition(
+        builder: (context, model, child) => WillPopScope(
+          onWillPop: () async => await model.onWillPop(),
+          child: Scaffold(
+            body: FadeTransition(
               opacity: model.pageChangeOpacityAnimation,
               child: SlideTransition(
                 position: model.pageChangeSlideAnimation,
@@ -36,41 +37,57 @@ class HomeView extends StatelessWidget {
                     ],
                   ),
                 ),
-              )),
-          // body: getCurrentPageView(model.activePageIndex),
-          bottomNavigationBar: Consumer<HomeModel>(
-            builder: (context, model, child) => AnimatedContainer(
-              duration: Duration(milliseconds: 300),
-              height: model.isBottomNavBarVisible ? 56.0 : 0.0,
-              child: Wrap(
-                children: [
-                  BottomNavigationBar(
-                    type: BottomNavigationBarType.fixed,
-                    backgroundColor: ts.clr2,
-                    selectedItemColor: ts.clr4,
-                    unselectedItemColor: Colors.white,
-                    currentIndex: model.activePageIndex,
-                    items: [
-                      BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-                      BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-                      BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
-                      BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
-                      BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
-                      BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
-                    ],
-                    onTap: (index) => {model.changeActivePage(index)},
-                  ),
-                ],
               ),
             ),
+            // body: FadeTransition(
+            //     opacity: model.pageChangeOpacityAnimation,
+            //     child: SlideTransition(
+            //       position: model.pageChangeSlideAnimation,
+            //       child: Container(
+            //         child: CustomScrollView(
+            //           controller: model.scrollController,
+            //           slivers: [
+            //             SearchSliverAppBar(),
+            //             SliverList(delegate: SliverChildListDelegate([getCurrentPageView(model.activePageIndex)])),
+            //           ],
+            //         ),
+            //       ),
+            //     )),
+            // body: getCurrentPageView(model.activePageIndex),
+            bottomNavigationBar: Consumer<HomeModel>(
+              builder: (context, model, child) => AnimatedContainer(
+                duration: Duration(milliseconds: 300),
+                height: model.isBottomNavBarVisible ? 56.0 : 0.0,
+                child: Wrap(
+                  children: [
+                    BottomNavigationBar(
+                      type: BottomNavigationBarType.fixed,
+                      backgroundColor: ts.clr2,
+                      selectedItemColor: ts.clr4,
+                      unselectedItemColor: Colors.white,
+                      currentIndex: model.activePageIndex,
+                      items: [
+                        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+                        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+                        BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
+                        BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
+                        BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
+                        BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
+                      ],
+                      onTap: (index) => {model.changeActivePage(index, true)},
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            bottomSheet: Consumer<HomeModel>(
+              builder: (context, model, child) => Text("debug:" + model.pageChangeSlideAnimation.value.toString()),
+            ),
+            // persistentFooterButtons: <Widget>[
+            //   Text("Test1"),
+            //   Text("Test2"),
+            // ],
           ),
-          bottomSheet: Consumer<HomeModel>(
-            builder: (context, model, child) => Text("debug:" + model.pageChangeSlideAnimation.value.toString()),
-          ),
-          // persistentFooterButtons: <Widget>[
-          //   Text("Test1"),
-          //   Text("Test2"),
-          // ],
         ),
       ),
     );
@@ -93,14 +110,27 @@ class HomeView extends StatelessWidget {
     }
   }
 
-  // TODO back press to exit çalıştırılacak:
-  _onBackPressed() {
-    DateTime now = DateTime.now();
-    if (currentBackPressTime == null || now.difference(currentBackPressTime) > Duration(seconds: 2)) {
-      currentBackPressTime = now;
-      Fluttertoast.showToast(msg: "Çıkmak için tekrar tıklayın");
-      return Future.value(false);
+  Widget getCurrentPageViewByName(String name) {
+    switch (name) {
+      case "Home":
+        return Dashboard();
+      case "Cart":
+        return Cart();
+      case "Account":
+        return Account();
+      default:
+        return Dashboard();
     }
-    return Future.value(true);
   }
+
+  // // TODO back press to exit çalıştırılacak:
+  // _onBackPressed() {
+  //   DateTime now = DateTime.now();
+  //   if (currentBackPressTime == null || now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+  //     currentBackPressTime = now;
+  //     Fluttertoast.showToast(msg: "Çıkmak için tekrar tıklayın");
+  //     return Future.value(false);
+  //   }
+  //   return Future.value(true);
+  // }
 }

@@ -1,13 +1,18 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shoppingappsampleflutter/core/services/routing/navigation.sevice.dart';
 import 'package:shoppingappsampleflutter/service_locator.dart';
 import 'package:shoppingappsampleflutter/ui/helpers/ticker.dart';
+import 'package:shoppingappsampleflutter/ui/widgets/NavigatorX.dart';
 
 import '../base.model.dart';
 
 class HomeModel extends BaseModel {
   final NavigationService _navigationService = locator<NavigationService>();
+  final NavigationHistory navigationHistory = locator<NavigationService>().homePageNavigationHistory;
 
   final ScrollController scrollController = ScrollController();
 
@@ -96,7 +101,7 @@ class HomeModel extends BaseModel {
     pageChangeAnimationController.forward();
   }
 
-  changeActivePage(int index) {
+  changeActivePage(int index, bool pushHistory) {
     if (activePageIndex == index) {
       return;
     } else if (this.activePageIndex > index) {
@@ -111,5 +116,27 @@ class HomeModel extends BaseModel {
     pageChangHideTimerAnimationController.reset();
     pageChangHideTimerAnimationController.forward();
     _activePageIndexTemp = index;
+    if (pushHistory) {
+      navigationHistory.push(index.toString());
+    }
+  }
+
+  goBack() {
+    navigationHistory.maybePop();
+  }
+
+  onWillPop() async {
+    print("onWillPop:" +
+        navigationHistory.canPop().toString() +
+        " current Route:" +
+        navigationHistory.currentRoute.routeName);
+    if (navigationHistory.canPop()) {
+      print("HERE");
+      RouteEntryX currentRoute = navigationHistory.maybePop();
+      changeActivePage(int.parse(currentRoute.routeName), false);
+      return false;
+    }
+    print("HERE2");
+    return true;
   }
 }
