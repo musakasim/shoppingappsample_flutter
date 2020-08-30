@@ -28,6 +28,13 @@ class HomeModel extends BaseModel {
   Animation<double> pageChangeHideTimerAnimation;
   Animation<double> pageChangeOpacityAnimation;
 
+  bool _isSearchAppBarVisible = true;
+  bool get isSearchAppBarVisible => _isSearchAppBarVisible;
+  set isSearchAppBarVisible(bool isSearchAppBarVisible) {
+    _isSearchAppBarVisible = isSearchAppBarVisible;
+    notifyListeners();
+  }
+
   bool _isBottomNavBarVisible = true;
   bool get isBottomNavBarVisible => _isBottomNavBarVisible;
   void set isBottomNavBarVisible(bool val) {
@@ -92,34 +99,40 @@ class HomeModel extends BaseModel {
           if (_isBottomNavBarVisible) {
             isBottomNavBarVisible = false;
           }
+          if (_isSearchAppBarVisible && activePageIndex == 0) {
+            isSearchAppBarVisible = false;
+          }
         }
 
         if (scrollController.position.userScrollDirection == ScrollDirection.forward) {
           if (!_isBottomNavBarVisible) {
             isBottomNavBarVisible = true;
           }
+          if (!_isSearchAppBarVisible && activePageIndex == 0) {
+            isSearchAppBarVisible = true;
+          }
         }
       },
     );
 
-    for (var i = 0; i < 6; i++) {
-      scrollControllers[i.toString()].addListener(
-        () {
-          notifyListeners(); // debug yaparken scroll position'ı görmek için uncomment yapılsın
-          if (scrollControllers[i.toString()].position.userScrollDirection == ScrollDirection.reverse) {
-            if (_isBottomNavBarVisible) {
-              isBottomNavBarVisible = false;
-            }
-          }
+    // for (var i = 0; i < 6; i++) {
+    //   scrollControllers[i.toString()].addListener(
+    //     () {
+    //       notifyListeners(); // debug yaparken scroll position'ı görmek için uncomment yapılsın
+    //       if (scrollControllers[i.toString()].position.userScrollDirection == ScrollDirection.reverse) {
+    //         if (_isBottomNavBarVisible) {
+    //           isBottomNavBarVisible = false;
+    //         }
+    //       }
 
-          if (scrollControllers[i.toString()].position.userScrollDirection == ScrollDirection.forward) {
-            if (!_isBottomNavBarVisible) {
-              isBottomNavBarVisible = true;
-            }
-          }
-        },
-      );
-    }
+    //       if (scrollControllers[i.toString()].position.userScrollDirection == ScrollDirection.forward) {
+    //         if (!_isBottomNavBarVisible) {
+    //           isBottomNavBarVisible = true;
+    //         }
+    //       }
+    //     },
+    //   );
+    // }
 
     // show first page
     pageChangeAnimationController.forward();

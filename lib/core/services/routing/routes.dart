@@ -34,7 +34,7 @@ class Routes {
         return MaterialPageRoute(builder: (context) => LogoutView());
       case Routes.Home:
         // return MaterialPageRoute(builder: (context) => ParentPage(child: HomeView()));
-        return MaterialPageRoute(builder: (context) => HomeView().withMenuDrawer());
+        return MaterialPageRoute(builder: (context) => (HomeView().withMenuDrawer()));// .withSafeExit()
       case Routes.ProductDetail:
         ProductDetailViewParams prdDetArgs;
         if (settings.arguments is ProductDetailViewParams) {

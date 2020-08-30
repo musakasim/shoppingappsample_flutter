@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shoppingappsampleflutter/core/services/theme.service.dart';
 import 'package:shoppingappsampleflutter/service_locator.dart';
 import 'package:shoppingappsampleflutter/ui/pages/home/account/account.view.dart';
-import 'package:shoppingappsampleflutter/ui/widgets/search_sliver_app_bar.dart';
+import 'package:shoppingappsampleflutter/ui/widgets/drawer_stack.dart';
 
 import 'cart/cart.view.dart';
 import 'dashboard/dashboard.view.dart';
@@ -12,7 +12,6 @@ import 'home.model.dart';
 class HomeView extends StatelessWidget {
   final ThemeService ts = locator<ThemeService>();
   final HomeModel homeModel = locator<HomeModel>();
-  // DateTime currentBackPressTime;
 
   HomeView({Key key}) : super(key: key);
 
@@ -22,75 +21,138 @@ class HomeView extends StatelessWidget {
       // create: (context) => HomeModel(),
       value: homeModel,
       child: Consumer<HomeModel>(
-        builder: (context, model, child) => WillPopScope(
-          onWillPop: () async => await model.onWillPop(),
-          child: Scaffold(
-            body: FadeTransition(
-              opacity: model.pageChangeOpacityAnimation,
-              child: SlideTransition(
-                position: model.pageChangeSlideAnimation,
+        builder: (context, model, child) {
+          var stackItems = List<Widget>();
+          FadeTransition fadeTransition = FadeTransition(
+            opacity: model.pageChangeOpacityAnimation,
+            child: SlideTransition(
+              position: model.pageChangeSlideAnimation,
+              child: Container(
+                child: CustomScrollView(
+                  key: PageStorageKey(model.activePageIndex.toString()),
+                  controller: model.scrollController, //model.scrollControllers[model.activePageIndex.toString()], //
+                  slivers: getCurrentPageView(model.activePageIndex),
+                ),
+              ),
+            ),
+          );
+          if (model.activePageIndex == 0) {
+            stackItems.add(AnimatedContainer(
+              curve: Curves.easeInCirc,
+              duration: Duration(milliseconds: 300),
+              padding: model.isSearchAppBarVisible ? EdgeInsets.only(top: 76.0) : EdgeInsets.zero,
+              child: fadeTransition,
+            ));
+          } else {
+            stackItems.add(fadeTransition);
+          }
+          if (model.activePageIndex == 0) {
+            stackItems.add(Align(
+              alignment: Alignment.topCenter,
+              child: AnimatedContainer(
+                curve: Curves.easeInCirc,
+                duration: Duration(milliseconds: 300),
+                height: model.isSearchAppBarVisible ? 76.0 : 0.0,
                 child: Container(
-                  child: CustomScrollView(
-                    // key: PageStorageKey(model.activePageIndex.toString()),
-                    controller: model.scrollControllers[model.activePageIndex.toString()], //model.scrollController, //
-                    slivers: getCurrentPageView(model.activePageIndex),
+                  height: 76,
+                  decoration: BoxDecoration(color: ts.clr3),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          // padding: EdgeInsets.all(0),
+                          // iconSize: 30,
+                          icon: Icon(Icons.menu),
+                          onPressed: () => {context.findAncestorWidgetOfExactType<DrawerStack>().openDrawer()},
+                        ),
+                        Expanded(
+                          child: TextField(
+                            onChanged: (value) {
+                              print("aaaa $value");
+                            },
+                            style: TextStyle(color: ts.white, fontSize: 18),
+                            decoration: InputDecoration(
+                                icon: Icon(
+                                  Icons.search,
+                                  color: ts.clr4,
+                                ),
+                                hintText: "Ara",
+                                hintStyle: TextStyle(color: ts.clr1)),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.shopping_cart),
+                          onPressed: () => {},
+                          color: ts.clr5,
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            // body: FadeTransition(
-            //     opacity: model.pageChangeOpacityAnimation,
-            //     child: SlideTransition(
-            //       position: model.pageChangeSlideAnimation,
-            //       child: Container(
-            //         child: CustomScrollView(
-            //           controller: model.scrollController,
-            //           slivers: [
-            //             SearchSliverAppBar(),
-            //             SliverList(delegate: SliverChildListDelegate([getCurrentPageView(model.activePageIndex)])),
-            //           ],
-            //         ),
-            //       ),
-            //     )),
-            // body: getCurrentPageView(model.activePageIndex),
-            bottomNavigationBar: Consumer<HomeModel>(
-              builder: (context, model, child) => AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                height: model.isBottomNavBarVisible ? 56.0 : 0.0,
-                child: Wrap(
-                  children: [
-                    BottomNavigationBar(
-                      type: BottomNavigationBarType.fixed,
-                      backgroundColor: ts.clr2,
-                      selectedItemColor: ts.clr4,
-                      unselectedItemColor: Colors.white,
-                      currentIndex: model.activePageIndex,
-                      items: [
-                        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-                        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-                        BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
-                        BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
-                        BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
-                        BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
-                      ],
-                      onTap: (index) => {model.changeActivePage(index, true)},
-                    ),
-                  ],
+            ));
+          }
+          return WillPopScope(
+            onWillPop: () async => await model.onWillPop(),
+            child: Scaffold(
+              body: Stack(
+                children: stackItems,
+              ),
+              // body: FadeTransition(
+              //     opacity: model.pageChangeOpacityAnimation,
+              //     child: SlideTransition(
+              //       position: model.pageChangeSlideAnimation,
+              //       child: Container(
+              //         child: CustomScrollView(
+              //           controller: model.scrollController,
+              //           slivers: [
+              //             SearchSliverAppBar(),
+              //             SliverList(delegate: SliverChildListDelegate([getCurrentPageView(model.activePageIndex)])),
+              //           ],
+              //         ),
+              //       ),
+              //     )),
+              // body: getCurrentPageView(model.activePageIndex),
+              bottomNavigationBar: Consumer<HomeModel>(
+                builder: (context, model, child) => AnimatedContainer(
+                  duration: Duration(milliseconds: 300),
+                  height: model.isBottomNavBarVisible ? 56.0 : 0.0,
+                  child: Wrap(
+                    children: [
+                      BottomNavigationBar(
+                        type: BottomNavigationBarType.fixed,
+                        backgroundColor: ts.clr2,
+                        selectedItemColor: ts.clr4,
+                        unselectedItemColor: Colors.white,
+                        currentIndex: model.activePageIndex,
+                        items: [
+                          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+                          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+                          BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
+                          BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
+                          BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
+                          BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Account'),
+                        ],
+                        onTap: (index) => {model.changeActivePage(index, true)},
+                      ),
+                    ],
+                  ),
                 ),
               ),
+              bottomSheet: Consumer<HomeModel>(
+                // builder: (context, model, child) => Text("debug:" + model.pageChangeSlideAnimation.value.toString()),
+                // builder: (context, model, child) => Text("debug:" + model.scrollController.toString()),
+                builder: (context, model, child) =>
+                    Text("debug:" + model.scrollControllers[model.activePageIndex.toString()].toString()),
+              ),
+              // persistentFooterButtons: <Widget>[
+              //   Text("Test1"),
+              //   Text("Test2"),
+              // ],
             ),
-            bottomSheet: Consumer<HomeModel>(
-              // builder: (context, model, child) => Text("debug:" + model.pageChangeSlideAnimation.value.toString()),
-              // builder: (context, model, child) => Text("debug:" + model.scrollController.toString()),
-              builder: (context, model, child) =>
-                  Text("debug:" + model.scrollControllers[model.activePageIndex.toString()].toString()),
-            ),
-            // persistentFooterButtons: <Widget>[
-            //   Text("Test1"),
-            //   Text("Test2"),
-            // ],
-          ),
-        ),
+          );
+        },
       ),
     );
   }
@@ -99,7 +161,7 @@ class HomeView extends StatelessWidget {
     switch (pageIndex) {
       case 0:
         return [
-          SearchSliverAppBar(),
+          // SearchSliverAppBar(),
           SliverList(delegate: SliverChildListDelegate([Dashboard()])),
         ];
       case 1:
@@ -137,17 +199,6 @@ class HomeView extends StatelessWidget {
         return Dashboard();
     }
   }
-
-  // // TODO back press to exit çalıştırılacak:
-  // _onBackPressed() {
-  //   DateTime now = DateTime.now();
-  //   if (currentBackPressTime == null || now.difference(currentBackPressTime) > Duration(seconds: 2)) {
-  //     currentBackPressTime = now;
-  //     Fluttertoast.showToast(msg: "Çıkmak için tekrar tıklayın");
-  //     return Future.value(false);
-  //   }
-  //   return Future.value(true);
-  // }
 }
 
 // SAMPLE ANIMATION FLOW:
