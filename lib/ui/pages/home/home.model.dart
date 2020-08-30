@@ -1,21 +1,23 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:shoppingappsampleflutter/core/services/routing/navigation.sevice.dart';
-import 'package:shoppingappsampleflutter/service_locator.dart';
 import 'package:shoppingappsampleflutter/ui/helpers/ticker.dart';
 import 'package:shoppingappsampleflutter/ui/widgets/NavigatorX.dart';
 
 import '../base.model.dart';
 
 class HomeModel extends BaseModel {
-  final NavigationService _navigationService = locator<NavigationService>();
-  final NavigationHistory navigationHistory = locator<NavigationService>().homePageNavigationHistory;
+  final NavigationHistory navigationHistory = NavigationHistory(currentRoute: RouteEntryX("0"));
 
   final ScrollController scrollController = ScrollController();
 
+  Map<String, ScrollController> scrollControllers = {
+    "0": ScrollController(debugLabel: "0"),
+    "1": ScrollController(debugLabel: "1"),
+    "2": ScrollController(debugLabel: "2"),
+    "3": ScrollController(debugLabel: "3"),
+    "4": ScrollController(debugLabel: "4"),
+    "5": ScrollController(debugLabel: "5"),
+  };
   AnimationController pageChangHideTimerAnimationController;
   AnimationController pageChangeAnimationController;
   Tween<Offset> pageChangeSlideTween;
@@ -42,6 +44,7 @@ class HomeModel extends BaseModel {
   }
 
   HomeModel() {
+    print("HomeModel ctor");
     pageChangeAnimationController =
         AnimationController(duration: const Duration(milliseconds: 200), vsync: SingleTickerProvider());
     // ilk açılışsa slide olmaması için başlangıç bitiş aynı yap:
@@ -60,7 +63,7 @@ class HomeModel extends BaseModel {
         //   weight: 1.0,
         // ),
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: 1).chain(CurveTween(curve: Curves.easeOutCirc)),
+          tween: Tween<double>(begin: 0, end: 1).chain(CurveTween(curve: Curves.easeOutCirc)), // Curves.fastOutSlowIn
           weight: 100.0,
         ),
       ],
@@ -84,6 +87,7 @@ class HomeModel extends BaseModel {
           });
     scrollController.addListener(
       () {
+        notifyListeners(); // debug yaparken scroll position'ı görmek için uncomment yapılsın
         if (scrollController.position.userScrollDirection == ScrollDirection.reverse) {
           if (_isBottomNavBarVisible) {
             isBottomNavBarVisible = false;
@@ -98,6 +102,26 @@ class HomeModel extends BaseModel {
       },
     );
 
+    for (var i = 0; i < 6; i++) {
+      scrollControllers[i.toString()].addListener(
+        () {
+          notifyListeners(); // debug yaparken scroll position'ı görmek için uncomment yapılsın
+          if (scrollControllers[i.toString()].position.userScrollDirection == ScrollDirection.reverse) {
+            if (_isBottomNavBarVisible) {
+              isBottomNavBarVisible = false;
+            }
+          }
+
+          if (scrollControllers[i.toString()].position.userScrollDirection == ScrollDirection.forward) {
+            if (!_isBottomNavBarVisible) {
+              isBottomNavBarVisible = true;
+            }
+          }
+        },
+      );
+    }
+
+    // show first page
     pageChangeAnimationController.forward();
   }
 
