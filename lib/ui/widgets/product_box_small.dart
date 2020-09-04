@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shoppingappsampleflutter2/core/models/product.dart';
-import 'package:shoppingappsampleflutter2/core/services/routing/navigation.sevice.dart';
-import 'package:shoppingappsampleflutter2/core/services/routing/routes.dart';
-import 'package:shoppingappsampleflutter2/core/services/theme.service.dart';
-import 'package:shoppingappsampleflutter2/service_locator.dart';
-import 'package:shoppingappsampleflutter2/ui/pages/product_detail/product_detail.view.dart';
-import 'package:shoppingappsampleflutter2/ui/widgets/favourite_button.dart';
+import 'package:shoppingappsampleflutter/core/models/product.dart';
+import 'package:shoppingappsampleflutter/core/services/routing/navigation.sevice.dart';
+import 'package:shoppingappsampleflutter/core/services/routing/routes.dart';
+import 'package:shoppingappsampleflutter/core/services/theme.service.dart';
+import 'package:shoppingappsampleflutter/service_locator.dart';
+import 'package:shoppingappsampleflutter/ui/pages/product_detail/product_detail.view.dart';
 
 class ProductBoxSmall extends StatelessWidget {
   final Product product;

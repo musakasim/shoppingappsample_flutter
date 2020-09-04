@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:shoppingappsampleflutter/core/services/theme.service.dart';
 import 'package:shoppingappsampleflutter/core/services/routing/navigation.sevice.dart';
 import 'package:shoppingappsampleflutter/core/services/routing/routes.dart';
-import 'package:shoppingappsampleflutter/core/services/db.service.dart';
 import 'package:shoppingappsampleflutter/core/models/app_config.dart';
 import 'package:shoppingappsampleflutter/service_locator.dart';
 

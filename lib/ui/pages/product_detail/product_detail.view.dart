@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:shoppingappsampleflutter/core/models/product.dart';
 import 'package:shoppingappsampleflutter/core/services/theme.service.dart';
 import 'package:shoppingappsampleflutter/service_locator.dart';
-import 'package:shoppingappsampleflutter/ui/widgets/search_sliver_app_bar.dart';
+import 'package:shoppingappsampleflutter/ui/widgets/product_box_small.dart';
 
 import 'product_detail.model.dart';
 
