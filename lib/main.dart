@@ -26,7 +26,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   ThemeService ts = locator<ThemeService>();
-  DbService db = locator<DbService>();
   NavigationService navigationService = locator<NavigationService>();
 
   @override
@@ -58,7 +57,6 @@ class _MyAppState extends State<MyApp> {
     if (!hasIntroSeenByUser) {
       navigationService.navigateToWithClearHistory(Routes.Splash);
     } else {
-      // TODO loading sayfası ekleyelim initialRoute bu sayfa olsun, bu else'e gelirse Home'a yönlensin:
       navigationService.navigateToWithClearHistory(Routes.Home);
     }
   }

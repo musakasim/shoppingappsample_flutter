@@ -10,6 +10,16 @@ const List<Product> sampleProducts1 = [
       "lib/core/services/api/sample_data/assets/51Ie2GNIeyL._AC_UL320_.jpg",
       "lib/core/services/api/sample_data/assets/71ZxkyZPZcL._AC_SL1200_.jpg",
     ],
+    specifications: [
+      "The stormbreak is waterproof over trouser",
+      "Designed with outside fun in mind",
+      "100% Polyester",
+      "Trousers",
+      "W808",
+      "Using our tough wearing hydrafort fabric with fully taped seams",
+      "Press stud hems and an elasticated waist",
+      "Protect from both wind and rain",
+    ],
   ),
   Product(
     id: "2",
@@ -19,6 +29,16 @@ const List<Product> sampleProducts1 = [
       "lib/core/services/api/sample_data/assets/81aWpazNFdL._AC_UX466_.jpg",
       "lib/core/services/api/sample_data/assets/81E46LhxkcL._AC_UX569_.jpg",
     ],
+    specifications: [
+      "The stormbreak is waterproof over trouser",
+      "Designed with outside fun in mind",
+      "100% Polyester",
+      "Trousers",
+      "W808",
+      "Using our tough wearing hydrafort fabric with fully taped seams",
+      "Press stud hems and an elasticated waist",
+      "Protect from both wind and rain",
+    ],
   ),
   Product(
     id: "3",
@@ -27,6 +47,16 @@ const List<Product> sampleProducts1 = [
     photoAssets: [
       "lib/core/services/api/sample_data/assets/81eFza8dcnL._AC_UX695_.jpg",
       "lib/core/services/api/sample_data/assets/81ljG5Nx+5L._AC_UX500_.jpg",
+    ],
+    specifications: [
+      "The stormbreak is waterproof over trouser",
+      "Designed with outside fun in mind",
+      "100% Polyester",
+      "Trousers",
+      "W808",
+      "Using our tough wearing hydrafort fabric with fully taped seams",
+      "Press stud hems and an elasticated waist",
+      "Protect from both wind and rain",
     ],
   ),
   Product(
@@ -38,6 +68,16 @@ const List<Product> sampleProducts1 = [
       "lib/core/services/api/sample_data/assets/51Ie2GNIeyL._AC_UL320_.jpg",
       "lib/core/services/api/sample_data/assets/71ZxkyZPZcL._AC_SL1200_.jpg",
     ],
+    specifications: [
+      "The stormbreak is waterproof over trouser",
+      "Designed with outside fun in mind",
+      "100% Polyester",
+      "Trousers",
+      "W808",
+      "Using our tough wearing hydrafort fabric with fully taped seams",
+      "Press stud hems and an elasticated waist",
+      "Protect from both wind and rain",
+    ],
   ),
   Product(
     id: "5",
@@ -47,6 +87,16 @@ const List<Product> sampleProducts1 = [
       "lib/core/services/api/sample_data/assets/81aWpazNFdL._AC_UX466_.jpg",
       "lib/core/services/api/sample_data/assets/81E46LhxkcL._AC_UX569_.jpg",
     ],
+    specifications: [
+      "The stormbreak is waterproof over trouser",
+      "Designed with outside fun in mind",
+      "100% Polyester",
+      "Trousers",
+      "W808",
+      "Using our tough wearing hydrafort fabric with fully taped seams",
+      "Press stud hems and an elasticated waist",
+      "Protect from both wind and rain",
+    ],
   ),
   Product(
     id: "6",
@@ -55,6 +105,16 @@ const List<Product> sampleProducts1 = [
     photoAssets: [
       "lib/core/services/api/sample_data/assets/81eFza8dcnL._AC_UX695_.jpg",
       "lib/core/services/api/sample_data/assets/81ljG5Nx+5L._AC_UX500_.jpg",
+    ],
+    specifications: [
+      "The stormbreak is waterproof over trouser",
+      "Designed with outside fun in mind",
+      "100% Polyester",
+      "Trousers",
+      "W808",
+      "Using our tough wearing hydrafort fabric with fully taped seams",
+      "Press stud hems and an elasticated waist",
+      "Protect from both wind and rain",
     ],
   ),
   Product(
@@ -66,6 +126,16 @@ const List<Product> sampleProducts1 = [
       "lib/core/services/api/sample_data/assets/51Ie2GNIeyL._AC_UL320_.jpg",
       "lib/core/services/api/sample_data/assets/71ZxkyZPZcL._AC_SL1200_.jpg",
     ],
+    specifications: [
+      "The stormbreak is waterproof over trouser",
+      "Designed with outside fun in mind",
+      "100% Polyester",
+      "Trousers",
+      "W808",
+      "Using our tough wearing hydrafort fabric with fully taped seams",
+      "Press stud hems and an elasticated waist",
+      "Protect from both wind and rain",
+    ],
   ),
   Product(
     id: "8",
@@ -75,6 +145,16 @@ const List<Product> sampleProducts1 = [
       "lib/core/services/api/sample_data/assets/81aWpazNFdL._AC_UX466_.jpg",
       "lib/core/services/api/sample_data/assets/81E46LhxkcL._AC_UX569_.jpg",
     ],
+    specifications: [
+      "The stormbreak is waterproof over trouser",
+      "Designed with outside fun in mind",
+      "100% Polyester",
+      "Trousers",
+      "W808",
+      "Using our tough wearing hydrafort fabric with fully taped seams",
+      "Press stud hems and an elasticated waist",
+      "Protect from both wind and rain",
+    ],
   ),
   Product(
     id: "9",
@@ -83,6 +163,16 @@ const List<Product> sampleProducts1 = [
     photoAssets: [
       "lib/core/services/api/sample_data/assets/81eFza8dcnL._AC_UX695_.jpg",
       "lib/core/services/api/sample_data/assets/81ljG5Nx+5L._AC_UX500_.jpg",
+    ],
+    specifications: [
+      "The stormbreak is waterproof over trouser",
+      "Designed with outside fun in mind",
+      "100% Polyester",
+      "Trousers",
+      "W808",
+      "Using our tough wearing hydrafort fabric with fully taped seams",
+      "Press stud hems and an elasticated waist",
+      "Protect from both wind and rain",
     ],
   ),
   Product(
@@ -94,6 +184,16 @@ const List<Product> sampleProducts1 = [
       "lib/core/services/api/sample_data/assets/51Ie2GNIeyL._AC_UL320_.jpg",
       "lib/core/services/api/sample_data/assets/71ZxkyZPZcL._AC_SL1200_.jpg",
     ],
+    specifications: [
+      "The stormbreak is waterproof over trouser",
+      "Designed with outside fun in mind",
+      "100% Polyester",
+      "Trousers",
+      "W808",
+      "Using our tough wearing hydrafort fabric with fully taped seams",
+      "Press stud hems and an elasticated waist",
+      "Protect from both wind and rain",
+    ],
   ),
   Product(
     id: "11",
@@ -103,6 +203,16 @@ const List<Product> sampleProducts1 = [
       "lib/core/services/api/sample_data/assets/81aWpazNFdL._AC_UX466_.jpg",
       "lib/core/services/api/sample_data/assets/81E46LhxkcL._AC_UX569_.jpg",
     ],
+    specifications: [
+      "The stormbreak is waterproof over trouser",
+      "Designed with outside fun in mind",
+      "100% Polyester",
+      "Trousers",
+      "W808",
+      "Using our tough wearing hydrafort fabric with fully taped seams",
+      "Press stud hems and an elasticated waist",
+      "Protect from both wind and rain",
+    ],
   ),
   Product(
     id: "12",
@@ -111,6 +221,16 @@ const List<Product> sampleProducts1 = [
     photoAssets: [
       "lib/core/services/api/sample_data/assets/81eFza8dcnL._AC_UX695_.jpg",
       "lib/core/services/api/sample_data/assets/81ljG5Nx+5L._AC_UX500_.jpg",
+    ],
+    specifications: [
+      "The stormbreak is waterproof over trouser",
+      "Designed with outside fun in mind",
+      "100% Polyester",
+      "Trousers",
+      "W808",
+      "Using our tough wearing hydrafort fabric with fully taped seams",
+      "Press stud hems and an elasticated waist",
+      "Protect from both wind and rain",
     ],
   ),
 ];

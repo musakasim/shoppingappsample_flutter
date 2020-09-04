@@ -3,7 +3,7 @@ import 'package:shoppingappsampleflutter/core/services/db.service.dart';
 import 'package:shoppingappsampleflutter/service_locator.dart';
 
 class AppConfig extends DbModel {
-  DbService _database = locator.get<DbService>();
+  DbService _database = locator<DbService>();
   String tableName = "appconfig";
 
   final int id;

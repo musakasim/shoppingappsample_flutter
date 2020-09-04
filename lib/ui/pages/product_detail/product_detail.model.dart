@@ -13,9 +13,16 @@ class ProductDetailModel extends BaseModel {
   final String tempPhotoAsset;
 
   Product _prd;
-  get prd => _prd;
+  Product get prd => _prd;
   set prd(Product prd) {
     this._prd = prd;
+    notifyListeners();
+  }
+
+  List<Product> _similarProducts;
+  List<Product> get similarProducts => _similarProducts;
+  set similarProducts(List<Product> similarProducts) {
+    this._similarProducts = similarProducts;
     notifyListeners();
   }
 
@@ -26,10 +33,27 @@ class ProductDetailModel extends BaseModel {
       name: "",
       price: 0,
     );
-    FetchProductDetail();
+    fetchProductDetail();
+    getSimilarItems();
   }
 
-  FetchProductDetail() async {
+  fetchProductDetail() async {
     prd = await prdService.getProduct(productId);
+  }
+
+  void goBack() {
+    _navigationService.goBack();
+  }
+
+  void share() {
+    print("TODO paylaş ekranı açılacak");
+  }
+
+  void addFavourite() {
+    print("TODO favori yapısı hazırlanacak");
+  }
+
+  getSimilarItems() async {
+    this.similarProducts = await prdService.getProducts();
   }
 }
